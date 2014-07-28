@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby '2.1.1'
 #ruby-gemset=railstutorial_rails_4_0
 
 gem 'rails', '4.0.8'
+gem 'bootstrap-sass' , '~> 2.3.2.0'
+gem 'sprockets', '2.11.0'
+
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
@@ -12,14 +15,14 @@ group :development, :test do
   gem 'guard-spork', '1.5.0'
   gem 'childprocess', '0.3.6'
   #gem 'pry-doc'
+  #gem 'byebug'
   #gem 'pry-byebug'
-#  gem 'pry-stack_explorer'
+  gem 'pry-stack_explorer'
   gem 'awesome_print'
   gem 'rails-env-switcher'
   gem 'rspec-console'
   gem 'cucumber-console'
   gem 'gnuplot'
-  gem 'byebug'
   gem 'pry-rails'
 
 end
@@ -29,7 +32,7 @@ group :test do
   gem 'capybara', '2.1.0'
 end
 
-gem 'sass-rails', '4.0.1'
+gem 'sass-rails', '4.0.3'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '4.0.1'
 gem 'jquery-rails', '3.0.4'
