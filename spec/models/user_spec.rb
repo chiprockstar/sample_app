@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe User do
 
-  before do
-    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+ before do
+    @user = User.new(name: "Example User", email: "user@example.com",
+                     password: "foobar", password_confirmation: "foobar")
   end
 
   subject { @user }
@@ -25,10 +26,10 @@ describe User do
   describe "when password is not present" do
     before do
       @user = User.new(name: "Example User", email: "user@example.com", password: " ", password_confirmation: " ")
-    end
+    
     it { should_not be_valid }
   end
-
+end
   describe "when name is not present" do
     before { @user.name = " " }
     it { should_not be_valid }
@@ -44,6 +45,9 @@ describe User do
     it { should_not be_valid }
   end
   
+  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
+  it { should respond_to(:authenticate) }
   
 describe "when email format is invalid" do
     it "should be invalid" do
@@ -96,7 +100,8 @@ describe "when email format is invalid" do
   describe "return value of authenticate method" do
     before { @user.save }
     let(:found_user) { User.find_by(email: @user.email) }
-  
+ 
+
    describe "with valid password" do
     it { should eq found_user.authenticate(@user.password) }
    end
@@ -106,6 +111,12 @@ describe "when email format is invalid" do
       it { should_not eq user_for_invalid_password }
       specify { expect(user_for_invalid_password).to be_false }
     end
-  end
+
+
+    describe "remember token" do
+      before { @user.save }
+      its(:remember_token) { should_not be_blank }
+    end
+   end
 end
 

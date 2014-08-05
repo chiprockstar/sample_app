@@ -12,12 +12,12 @@ describe "User pages" do
   end
   
   describe "profile page" do
-  let(:user) { FactoryGirl.create(:user) }
-  before { visit user_path(user) }
+    let(:user) { FactoryGirl.create(:user) }
+    before { visit user_path(user) }
 
-  it { should have_content(user.name) }
-  it { should have_title(user.name) }
-end
+    it { should have_content(user.name) }
+    it { should have_title(user.name) }
+  end
   
   
    describe "signup page" do
@@ -46,7 +46,7 @@ end
         fill_in "Password",     with: "foobar"
         fill_in "Confirmation", with: "foobar"
       end
-
+    
       it "should create a user" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
@@ -58,15 +58,6 @@ end
         it { should have_title(user.name) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome to the Sample App!') }
       end
-      
-      
-      
-      
     end 
   end
-  
- 
-      
-
-      
 end
