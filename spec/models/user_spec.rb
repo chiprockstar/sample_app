@@ -15,8 +15,11 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
 
   it { should be_valid }
+  it { should_not be_admin }
+  
   
   describe "when password doesn't match confirmation" do
     before { @user.password_confirmation = "mismatch" }
