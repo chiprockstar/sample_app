@@ -18,13 +18,10 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:microposts) }
   it { should respond_to(:feed) }
+  it { should respond_to(:relationships) }
 
   it { should be_valid }
   it { should_not be_admin }
-
-  it { should respond_to(:feed) }
-  it { should respond_to(:relationships) }
-
 
   it { should respond_to(:followed_users) }
 
@@ -41,6 +38,8 @@ describe User do
     let(:other_user) { FactoryGirl.create(:user) }
     before do
       @user.save
+      @user.follow!(other_user)
+    end
 
     it { should be_following(other_user) }
     its(:followed_users) { should include(other_user) }
@@ -58,7 +57,7 @@ describe User do
         its(:followed_users) { should_not include(other_user) }
       end
     end
-  end
+
 
   describe "when password doesn't match confirmation" do
     before { @user.password_confirmation = "mismatch" }
@@ -189,11 +188,23 @@ describe "when email format is invalid" do
         let(:unfollowed_post) do
           FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
         end
+        let(:followed_user) { FactoryGirl.create(:user) }
+
+        before do
+          @user.follow!(followed_user)
+          3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
+        end
 
         its(:feed) { should include(newer_micropost) }
         its(:feed) { should include(older_micropost) }
         its(:feed) { should_not include(unfollowed_post) }
+        its(:feed) do
+        followed_user.microposts.each do |micropost|
+          should include(micropost)
+        end
+
       end
     end
   end
+end
 end
